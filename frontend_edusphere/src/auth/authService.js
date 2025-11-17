@@ -1,6 +1,5 @@
-import { supabase } from '../lib/supabaseClient';
+import { supabase, getEmailRedirectTo } from '../lib/supabaseClient';
 import { getLogger } from '../shared/utils/logger';
-import { getEmailRedirectTo } from '../lib/supabaseClient';
 
 const logger = getLogger('authService');
 

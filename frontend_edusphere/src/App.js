@@ -5,7 +5,7 @@ import { getLogger } from './shared/utils/logger';
 import { usePageAnalytics } from './hooks/usePageAnalytics';
 import { useFeatureFlag } from './shared/featureFlags/featureFlags';
 import { useToast } from './components/feedback/useToast';
-import { isSupabaseEnabled } from './config/env';
+import { isSupabaseEnabled } from './lib/supabaseClient';
 import { AppRoutes } from './routes';
 import { Breadcrumbs } from './components/layout/Breadcrumbs';
 
