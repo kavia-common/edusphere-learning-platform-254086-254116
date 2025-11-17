@@ -6,6 +6,7 @@ import { About } from '../pages/About';
 import { NotFound } from '../pages/NotFound';
 import { Login } from '../pages/auth/Login';
 import { Register } from '../pages/auth/Register';
+import { Signup } from '../pages/auth/Signup';
 import { ForgotPassword } from '../pages/auth/ForgotPassword';
 import { VerifyEmail } from '../pages/auth/VerifyEmail';
 import { OAuthCallback } from '../pages/auth/OAuthCallback';
@@ -82,6 +83,7 @@ export function AppRoutes({ onToggleTheme, theme, aboutProps }) {
           {/* Auth */}
           <Route path={ROUTES.LOGIN} element={<Login />} />
           <Route path={ROUTES.REGISTER} element={<Register />} />
+          <Route path={ROUTES.SIGNUP} element={<Signup />} />
           <Route path={ROUTES.FORGOT_PASSWORD} element={<ForgotPassword />} />
           <Route path={ROUTES.VERIFY_EMAIL} element={<VerifyEmail />} />
           <Route path={ROUTES.OAUTH_CALLBACK} element={<OAuthCallback />} />

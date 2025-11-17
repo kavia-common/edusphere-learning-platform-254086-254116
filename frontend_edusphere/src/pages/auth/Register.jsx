@@ -94,6 +94,7 @@ export function Register() {
               {busy ? 'Creating...' : 'Create account'}
             </button>
             <Link className="btn btn-ghost" to="/login">Back to sign in</Link>
+            <Link className="btn btn-ghost" to="/signup">Go to Signup</Link>
           </div>
         </div>
       </form>
