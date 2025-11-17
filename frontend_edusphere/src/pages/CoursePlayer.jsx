@@ -6,6 +6,7 @@ import { NotesPanel } from '../components/NotesPanel';
 import { ProgressBar } from '../components/ProgressBar';
 import { useAuth } from '../auth/AuthProvider';
 import { getLogger } from '../shared/utils/logger';
+import { Skeleton } from '../components/state/Skeleton';
 
 // Optionally import collab components when the feature flag is enabled in env.
 // Example usage (uncomment to render in the player surface or panels):
@@ -104,7 +105,11 @@ export function CoursePlayer() {
     }
   };
 
-  if (loading) return <div aria-busy="true">Loading player...</div>;
+  if (loading) return (
+    <div className="app-surface card">
+      <Skeleton lines={8} height={18} />
+    </div>
+  );
   if (error) return <div role="alert" style={{ color: 'var(--color-error)' }}>{error}</div>;
   if (!course) return <div className="app-surface card">Course not found.</div>;
 

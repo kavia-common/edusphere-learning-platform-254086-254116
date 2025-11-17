@@ -8,6 +8,9 @@ import { Filters } from '../components/Filters';
 import { CourseCard } from '../components/CourseCard';
 import { getLogger } from '../shared/utils/logger';
 import { useFeatureFlag } from '../shared/featureFlags/featureFlags';
+import { Skeleton } from '../components/state/Skeleton';
+import { EmptyState } from '../components/state/EmptyState';
+import { useToast } from '../components/feedback/useToast';
 
 const logger = getLogger('Catalog');
 
@@ -29,6 +32,7 @@ export function Catalog() {
   const [state, setState] = React.useState({ loading: true, items: [], total: 0, error: '', unauthorized: false });
 
   const experiments = useFeatureFlag('experiments');
+  const { error: toastError } = useToast();
 
   React.useEffect(() => {
     const newParams = new URLSearchParams();
@@ -59,6 +63,11 @@ export function Catalog() {
         if (!alive) return;
         logger.warn('fetchCourses rejected', { error: String(err) });
         setState({ loading: false, items: [], total: 0, error: 'Unable to load catalog', unauthorized: false });
+        try {
+          toastError('Catalog error', 'Unable to load catalog');
+        } catch {
+          // ignore toast errors
+        }
       });
     return () => { alive = false; };
   }, [page, pageSize, debounced, category, level, sortBy, sortDir]);
@@ -100,10 +109,17 @@ export function Catalog() {
           </div>
         </div>
 
-        {state.loading && <div aria-busy="true">Loading courses...</div>}
+        {state.loading && (
+          <div className="app-surface card">
+            <Skeleton lines={4} height={24} />
+          </div>
+        )}
         {state.error && <div role="alert" style={{ color: 'var(--color-error)' }}>{state.error}</div>}
         {!state.loading && !state.error && state.items.length === 0 && (
-          <div className="app-surface card">No courses found.</div>
+          <EmptyState
+            title="No courses found"
+            description="Try adjusting your search or filters."
+          />
         )}
 
         <div style={{

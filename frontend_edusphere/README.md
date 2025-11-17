@@ -6,7 +6,7 @@ Ocean Professional themed React app scaffold with routing, Zustand state, ErrorB
 - React Router v6 with basic pages (Home, About, NotFound)
 - Ocean Professional theme with glassmorphism accents
 - Zustand global UI store (theme, sidebar)
-- ErrorBoundary with friendly fallback and redaction-aware logging
+- ErrorBoundary with friendly fallback and redaction-aware logging (uses themed Server Error fallback)
 - Feature flags via `REACT_APP_FEATURE_FLAGS` (comma-separated `flag=value`)
 - No secrets hardcoded; all configuration via environment variables
 
@@ -27,6 +27,9 @@ Ocean Professional themed React app scaffold with routing, Zustand state, ErrorB
 - `src/shared/utils/logger.js` — Structured logger (level via `REACT_APP_LOG_LEVEL`)
 - `src/shared/config/environment.js` — Access env config
 - `src/theme/ThemeProvider.jsx` — Applies current theme to document
+- `src/components/feedback/Toast.jsx` & `useToast.js` — Global Ocean Professional toasts
+- `src/components/state/EmptyState.jsx` & `Skeleton.jsx` — Shared UI states
+- `src/pages/error/*` — Standardized error pages (404, 500, 403)
 
 ## Environment
 See `.env.example` for supported variables. Do not commit real secrets.

@@ -1,5 +1,6 @@
 import React from 'react';
 import { getLogger } from '../utils/logger';
+import { ServerErrorFallback } from '../../pages/error/ServerError';
 
 const logger = getLogger('ErrorBoundary');
 
@@ -32,10 +33,7 @@ export class ErrorBoundary extends React.Component {
       return (
         <div className="container" style={{ paddingTop: '2rem' }}>
           <section className="app-surface card" role="alert" aria-live="assertive">
-            <h2>Something went wrong.</h2>
-            <p>We encountered an unexpected error. Please try reloading the page.</p>
-            <p style={{ opacity: 0.7, fontSize: 12 }}>Error ID: {this.state.errorId}</p>
-            <button className="btn btn-primary" onClick={this.handleReload}>Reload</button>
+            <ServerErrorFallback errorId={this.state.errorId} onRetry={this.handleReload} />
           </section>
         </div>
       );

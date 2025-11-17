@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { fetchCourseById, fetchLessons } from '../services/courseService';
 import { ProgressBar } from '../components/ProgressBar';
 import { getLogger } from '../shared/utils/logger';
+import { Skeleton } from '../components/state/Skeleton';
 
 const logger = getLogger('CourseDetail');
 
@@ -35,7 +36,11 @@ export function CourseDetail() {
     return () => { active = false; };
   }, [id]);
 
-  if (loading) return <div aria-busy="true">Loading course...</div>;
+  if (loading) return (
+    <div className="app-surface card">
+      <Skeleton lines={6} height={18} />
+    </div>
+  );
   if (error) return <div role="alert" style={{ color: 'var(--color-error)' }}>{error}</div>;
   if (!course) return <div className="app-surface card">Course not found.</div>;
 

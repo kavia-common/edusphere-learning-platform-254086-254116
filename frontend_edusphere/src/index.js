@@ -6,6 +6,7 @@ import App from './App';
 import { ErrorBoundary } from './shared/components/ErrorBoundary';
 import { ThemeProvider } from './theme/ThemeProvider';
 import { AuthProvider } from './auth/AuthProvider';
+import { ToastProvider } from './components/feedback/Toast';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -14,7 +15,9 @@ root.render(
       <ThemeProvider>
         <BrowserRouter>
           <AuthProvider>
-            <App />
+            <ToastProvider>
+              <App />
+            </ToastProvider>
           </AuthProvider>
         </BrowserRouter>
       </ThemeProvider>
