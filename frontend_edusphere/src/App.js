@@ -15,6 +15,12 @@ import { VerifyEmail } from './pages/auth/VerifyEmail';
 import { OAuthCallback } from './pages/auth/OAuthCallback';
 import { ProtectedRoute } from './auth/ProtectedRoute';
 
+// New pages
+import { Catalog } from './pages/Catalog';
+import { CourseDetail } from './pages/CourseDetail';
+import { CoursePlayer } from './pages/CoursePlayer';
+import { Profile } from './pages/Profile';
+
 const logger = getLogger('App');
 
 // PUBLIC_INTERFACE
@@ -48,6 +54,10 @@ function App() {
         <Routes>
           {/* Public routes */}
           <Route path="/" element={<Home />} />
+          <Route path="/catalog" element={<Catalog />} />
+          <Route path="/courses/:id" element={<CourseDetail />} />
+          <Route path="/courses/:id/learn" element={<CoursePlayer />} />
+
           <Route path="/about" element={<About experiments={experiments} />} />
           <Route path="/health" element={<Navigate to="/" replace />} />
 
@@ -60,6 +70,11 @@ function App() {
 
           {/* Example protected route */}
           <Route path="/dashboard" element={ProtectedDashboard} />
+          <Route path="/profile" element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          } />
 
           {/* Fallback */}
           <Route path="*" element={<NotFound />} />
