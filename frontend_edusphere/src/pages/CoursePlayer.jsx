@@ -7,6 +7,16 @@ import { ProgressBar } from '../components/ProgressBar';
 import { useAuth } from '../auth/AuthProvider';
 import { getLogger } from '../shared/utils/logger';
 
+// Optionally import collab components when the feature flag is enabled in env.
+// Example usage (uncomment to render in the player surface or panels):
+//   import { PresenceAvatars } from '../components/collab/PresenceAvatars';
+//   import { TypingIndicator } from '../components/collab/TypingIndicator';
+//   import { LiveCursor } from '../components/collab/LiveCursor';
+// Then place them in JSX where appropriate:
+//   <PresenceAvatars roomId={`course:${id}:lesson:${activeLesson?.id || ''}`} />
+//   <TypingIndicator roomId={`course:${id}:lesson:${activeLesson?.id || ''}`} inputSelector="textarea" />
+//   <LiveCursor roomId={`course:${id}:lesson:${activeLesson?.id || ''}`} containerRef={someRef} />
+
 const logger = getLogger('CoursePlayer');
 
 /**
