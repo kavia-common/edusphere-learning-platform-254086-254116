@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { signInWithPassword, sendMagicLink } from '../../auth/authService';
 import { getLogger } from '../../shared/utils/logger';
+import { useFeatureFlag } from '../../shared/featureFlags/featureFlags';
 
 const logger = getLogger('Login');
 
@@ -18,6 +19,9 @@ export function Login() {
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || '/';
+
+  // Feature flag: allow toggling magic link auth visibility
+  const magicLinkEnabled = useFeatureFlag('magic_link_auth', true);
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -103,9 +107,11 @@ export function Login() {
             <button className="btn btn-primary" type="submit" disabled={busy} aria-busy={busy}>
               {busy ? 'Signing in...' : 'Sign in'}
             </button>
-            <button className="btn btn-ghost" type="button" onClick={onMagic} disabled={busy}>
-              Send magic link
-            </button>
+            {magicLinkEnabled && (
+              <button className="btn btn-ghost" type="button" onClick={onMagic} disabled={busy}>
+                Send magic link
+              </button>
+            )}
           </div>
 
           <div id="login-help" style={{ fontSize: 12, opacity: 0.8 }}>
