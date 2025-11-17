@@ -7,6 +7,7 @@ import { About } from './pages/About';
 import { NotFound } from './pages/NotFound';
 import { useUIStore } from './state/uiStore';
 import { getLogger } from './shared/utils/logger';
+import { usePageAnalytics } from './hooks/usePageAnalytics';
 import { useFeatureFlag } from './shared/featureFlags/featureFlags';
 import { Login } from './pages/auth/Login';
 import { Register } from './pages/auth/Register';
@@ -43,6 +44,9 @@ function App() {
     document.documentElement.setAttribute('data-theme', theme);
     logger.info('Theme applied', { theme });
   }, [theme]);
+
+  // Track page views on route transitions
+  usePageAnalytics();
 
   const toggleTheme = () => {
     setTheme(theme === 'light' ? 'dark' : 'light');
