@@ -1,82 +1,35 @@
-# Lightweight React Template for KAVIA
+# EduSphere Frontend (React)
 
-This project provides a minimal React template with a clean, modern UI and minimal dependencies.
+Ocean Professional themed React app scaffold with routing, Zustand state, ErrorBoundary, feature flags, and structured logger.
 
-## Features
-
-- **Lightweight**: No heavy UI frameworks - uses only vanilla CSS and React
-- **Modern UI**: Clean, responsive design with KAVIA brand styling
-- **Fast**: Minimal dependencies for quick loading times
-- **Simple**: Easy to understand and modify
+## Key Features
+- React Router v6 with basic pages (Home, About, NotFound)
+- Ocean Professional theme with glassmorphism accents
+- Zustand global UI store (theme, sidebar)
+- ErrorBoundary with friendly fallback and redaction-aware logging
+- Feature flags via `REACT_APP_FEATURE_FLAGS` (comma-separated `flag=value`)
+- No secrets hardcoded; all configuration via environment variables
 
 ## Getting Started
 
-In the project directory, you can run:
+1. Copy `.env.example` to `.env` and fill in values
+2. Install dependencies
+   - npm install
+3. Start the app
+   - npm start
 
-### `npm start`
+## Project Structure
+- `src/layout/Layout.jsx` — App chrome (header, nav, theme toggle)
+- `src/pages/*` — Basic routed pages
+- `src/state/uiStore.js` — Zustand UI state
+- `src/shared/components/ErrorBoundary.jsx` — Error handling wrapper
+- `src/shared/featureFlags/featureFlags.js` — Feature flag helpers
+- `src/shared/utils/logger.js` — Structured logger (level via `REACT_APP_LOG_LEVEL`)
+- `src/shared/config/environment.js` — Access env config
+- `src/theme/ThemeProvider.jsx` — Applies current theme to document
 
-Runs the app in development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Environment
+See `.env.example` for supported variables. Do not commit real secrets.
 
-### `npm test`
-
-Launches the test runner in interactive watch mode.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-## Customization
-
-### Colors
-
-The main brand colors are defined as CSS variables in `src/App.css`:
-
-```css
-:root {
-  --kavia-orange: #E87A41;
-  --kavia-dark: #1A1A1A;
-  --text-color: #ffffff;
-  --text-secondary: rgba(255, 255, 255, 0.7);
-  --border-color: rgba(255, 255, 255, 0.1);
-}
-```
-
-### Components
-
-This template uses pure HTML/CSS components instead of a UI framework. You can find component styles in `src/App.css`. 
-
-Common components include:
-- Buttons (`.btn`, `.btn-large`)
-- Container (`.container`)
-- Navigation (`.navbar`)
-- Typography (`.title`, `.subtitle`, `.description`)
-
-## Learn More
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Notes
+- This is step 1 scaffold; future steps will integrate Supabase, auth, dashboards, realtime, and analytics.
