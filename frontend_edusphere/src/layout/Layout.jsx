@@ -1,6 +1,6 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
 import { isSupabaseEnabled } from '../config/env';
+import { NavLinks } from '../components/layout/NavLinks';
 
 /**
  * PUBLIC_INTERFACE
@@ -13,19 +13,8 @@ export function Layout({ children, onToggleTheme, theme }) {
       <header className="app-header">
         <nav className="navbar container">
           <div className="nav-brand">EduSphere</div>
-          <NavLink to="/" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Home</NavLink>
-          <NavLink to="/catalog" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Catalog</NavLink>
-          <NavLink to="/about" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>About</NavLink>
-          <NavLink to="/health" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Health</NavLink>
-
-          <NavLink to="/dashboard" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Dashboard</NavLink>
-          <NavLink to="/dash/student" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Student</NavLink>
-          <NavLink to="/dash/instructor" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Instructor</NavLink>
-          <NavLink to="/dash/admin" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Admin</NavLink>
-
+          <NavLinks />
           <div className="nav-spacer" />
-          <NavLink to="/profile" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Profile</NavLink>
-          <NavLink to="/login" className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}>Login</NavLink>
           <button
             type="button"
             className="btn btn-ghost"
