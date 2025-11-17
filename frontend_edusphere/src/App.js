@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import { Layout } from './layout/Layout';
 import { Home } from './pages/Home';
 import { About } from './pages/About';
@@ -21,6 +21,13 @@ import { CourseDetail } from './pages/CourseDetail';
 import { CoursePlayer } from './pages/CoursePlayer';
 import { Profile } from './pages/Profile';
 
+// Dashboards
+import { StudentDashboard } from './pages/StudentDashboard';
+import { InstructorDashboard } from './pages/InstructorDashboard';
+import { AdminDashboard } from './pages/AdminDashboard';
+import { useAuth } from './auth/AuthProvider';
+import { getPrimaryRole, ROLES } from './shared/utils/roles';
+
 const logger = getLogger('App');
 
 // PUBLIC_INTERFACE
@@ -29,6 +36,8 @@ function App() {
   const theme = useUIStore(s => s.theme);
   const setTheme = useUIStore(s => s.setTheme);
   const experiments = useFeatureFlag('experiments');
+  const { user } = useAuth();
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
@@ -39,14 +48,23 @@ function App() {
     setTheme(theme === 'light' ? 'dark' : 'light');
   };
 
-  const ProtectedDashboard = (
+  // route helper for /dashboard -> role-based dashboards
+  const DashboardRouter = (
     <ProtectedRoute>
-      <div>
-        <h1>Dashboard (Protected)</h1>
-        <p>This is a placeholder for authenticated users only.</p>
-      </div>
+      <RoleDashboardRedirect />
     </ProtectedRoute>
   );
+
+  function RoleDashboardRedirect() {
+    /** Decides which dashboard to render based on primary role; defaults to student. */
+    const role = getPrimaryRole(user) || ROLES.STUDENT;
+    React.useEffect(() => {
+      if (role === ROLES.ADMIN) navigate('/dash/admin', { replace: true });
+      else if (role === ROLES.INSTRUCTOR) navigate('/dash/instructor', { replace: true });
+      else navigate('/dash/student', { replace: true });
+    }, [role]);
+    return <div aria-busy="true">Loading dashboard...</div>;
+  }
 
   return (
     <div className="App">
@@ -68,13 +86,41 @@ function App() {
           <Route path="/verify" element={<VerifyEmail />} />
           <Route path="/auth/callback" element={<OAuthCallback />} />
 
-          {/* Example protected route */}
-          <Route path="/dashboard" element={ProtectedDashboard} />
-          <Route path="/profile" element={
-            <ProtectedRoute>
-              <Profile />
-            </ProtectedRoute>
-          } />
+          {/* Role-based dashboards */}
+          <Route path="/dashboard" element={DashboardRouter} />
+          <Route
+            path="/dash/student"
+            element={
+              <ProtectedRoute>
+                <StudentDashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/dash/instructor"
+            element={
+              <ProtectedRoute>
+                <InstructorDashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/dash/admin"
+            element={
+              <ProtectedRoute>
+                <AdminDashboard />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            }
+          />
 
           {/* Fallback */}
           <Route path="*" element={<NotFound />} />

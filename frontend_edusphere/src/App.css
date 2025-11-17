@@ -5,6 +5,12 @@
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+@keyframes pulse {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+}
+
 .app-surface {
   background: var(--color-surface);
   border-radius: var(--radius-md);
