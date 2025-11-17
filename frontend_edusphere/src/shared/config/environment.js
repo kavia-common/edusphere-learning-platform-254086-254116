@@ -1,13 +1,17 @@
+/**
+ * Deprecated shim: prefer using src/config/env.js (getEnv) for validated configuration.
+ * This module remains for backward compatibility with existing imports.
+ */
 const env = {
   // PUBLIC_INTERFACE
-  /** Returns environment configuration values required by the app. */
+  /** Returns raw environment configuration values without validation (deprecated). */
   getConfig() {
     return {
       apiBase: process.env.REACT_APP_API_BASE,
       backendUrl: process.env.REACT_APP_BACKEND_URL,
       frontendUrl: process.env.REACT_APP_FRONTEND_URL,
       wsUrl: process.env.REACT_APP_WS_URL,
-      nodeEnv: process.env.REACT_APP_NODE_ENV,
+      nodeEnv: process.env.REACT_APP_NODE_ENV || process.env.NODE_ENV,
       telemetryDisabled: process.env.REACT_APP_NEXT_TELEMETRY_DISABLED,
       enableSourceMaps: process.env.REACT_APP_ENABLE_SOURCE_MAPS,
       port: process.env.REACT_APP_PORT,

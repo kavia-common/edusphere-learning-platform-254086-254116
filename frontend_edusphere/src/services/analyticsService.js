@@ -1,11 +1,11 @@
 import { supabase } from '../lib/supabaseClient';
-import env from '../shared/config/environment';
+import { getEnv } from '../config/env';
 import { getLogger } from '../shared/utils/logger';
 import { getAllFeatureFlags } from '../shared/featureFlags/featureFlags';
 
 const logger = getLogger('analyticsService');
 
-const { nodeEnv } = env.getConfig();
+const { nodeEnv } = getEnv();
 const FLAGS = getAllFeatureFlags();
 
 // Sampling strategy by environment: lower in development/test to reduce noise.

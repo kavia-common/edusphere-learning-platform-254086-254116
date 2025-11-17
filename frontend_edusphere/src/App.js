@@ -28,6 +28,9 @@ import { InstructorDashboard } from './pages/InstructorDashboard';
 import { AdminDashboard } from './pages/AdminDashboard';
 import { useAuth } from './auth/AuthProvider';
 import { getPrimaryRole, ROLES } from './shared/utils/roles';
+import { HealthCheck } from './pages/health/HealthCheck';
+import { useToast } from './components/feedback/useToast';
+import { isSupabaseEnabled } from './config/env';
 
 const logger = getLogger('App');
 
@@ -44,6 +47,18 @@ function App() {
     document.documentElement.setAttribute('data-theme', theme);
     logger.info('Theme applied', { theme });
   }, [theme]);
+
+  // Notify about Supabase configuration issues without breaking preview
+  const { warning } = useToast();
+  React.useEffect(() => {
+    try {
+      if (!isSupabaseEnabled()) {
+        warning('Limited functionality: Supabase not configured', 'Some features (auth, realtime, data) are disabled. Set REACT_APP_SUPABASE_URL and REACT_APP_SUPABASE_KEY.');
+      }
+    } catch {
+      // ignore toast errors in test env
+    }
+  }, []);
 
   // Track page views on route transitions
   usePageAnalytics();
@@ -81,7 +96,7 @@ function App() {
           <Route path="/courses/:id/learn" element={<CoursePlayer />} />
 
           <Route path="/about" element={<About experiments={experiments} />} />
-          <Route path="/health" element={<Navigate to="/" replace />} />
+          <Route path="/health" element={<HealthCheck />} />
 
           {/* Auth routes */}
           <Route path="/login" element={<Login />} />
